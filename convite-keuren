@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convite Especial</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(
+        to bottom,
+        #7ec8ff 0%,
+        #7ec8ff 65%,
+        #6cc06c 65%,
+        #6cc06c 100%
+    );
+    overflow:hidden;
+    transition:background 1s ease;
+}
+
+.cloud{
+    position:absolute;
+    background:#fff;
+    border-radius:50px;
+}
+
+.cloud::before,
+.cloud::after{
+    content:"";
+    position:absolute;
+    background:#fff;
+    border-radius:50%;
+}
+
+.cloud1{
+    width:120px;
+    height:40px;
+    top:15%;
+    left:10%;
+}
+
+.cloud1::before{
+    width:50px;
+    height:50px;
+    left:15px;
+    top:-20px;
+}
+
+.cloud1::after{
+    width:60px;
+    height:60px;
+    right:15px;
+    top:-30px;
+}
+
+.cloud2{
+    width:160px;
+    height:50px;
+    top:25%;
+    right:12%;
+}
+
+.cloud2::before{
+    width:60px;
+    height:60px;
+    left:20px;
+    top:-25px;
+}
+
+.cloud2::after{
+    width:70px;
+    height:70px;
+    right:20px;
+    top:-35px;
+}
+
+.card{
+    width:min(90%,600px);
+    background:white;
+    border-radius:24px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.2);
+    z-index:2;
+}
+
+h1{
+    color:#1f2937;
+    margin-bottom:16px;
+}
+
+p{
+    color:#4b5563;
+    line-height:1.6;
+}
+
+.hidden{
+    display:none;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    padding:14px 28px;
+    border-radius:999px;
+    font-size:16px;
+    font-weight:700;
+    margin:12px;
+    transition:.2s;
+}
+
+.primary{
+    background:#ffcc00;
+}
+
+.secondary{
+    background:#efefef;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+#result{
+    animation:fade .5s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes floatHeart{
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-100vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<div class="card">
+
+    <div id="step1">
+        <h1>Keuren, você foi convocada para uma Missão Especial 🚀</h1>
+
+        <p>
+            Temos uma aventura pendente!<br>
+            Eu queria muito que você estivesse presente nela.
+        </p>
+
+        <br>
+
+        <button class="primary" onclick="openInvite()">
+            Abrir Convite
+        </button>
+    </div>
+
+    <div id="step2" class="hidden">
+        <h1>📽️ Convite Oficial</h1>
+
+        <p>
+            Entre todas as pessoas do universo,
+            existe uma que eu gostaria de ter ao meu lado
+            para assistir Toy Story.
+        </p>
+
+        <br>
+
+        <p>
+            Então fica a pergunta:
+        </p>
+
+        <h2 style="margin-top:20px">
+            Você aceita assistir Toy Story comigo?
+        </h2>
+
+        <br>
+
+        <button class="primary" onclick="accepted()">
+            Sim ❤️
+        </button>
+
+        <button
+            id="noBtn"
+            class="secondary"
+            onmouseover="escapeButton()">
+            Não 😅
+        </button>
+    </div>
+
+    <div id="result" class="hidden">
+        <h1>❤️ Missão Aceita ❤️</h1>
+
+        <p>
+            Então está combinado.
+        </p>
+
+        <br>
+
+        <p>
+            O que eu realmente queria era passar esse tempo com você.
+        </p>
+
+        <br>
+
+        <br>
+
+        <h2>
+            Te busco para nossa aventura futuramente
+        </h2>
+    </div>
+
+</div>
+
+<script>
+function openInvite(){
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+}
+
+function accepted(){
+
+    document.body.style.background =
+        "linear-gradient(135deg,#ff9a9e 0%,#fad0c4 50%,#ffd1ff 100%)";
+
+    document.querySelectorAll('.cloud').forEach(cloud => {
+        cloud.style.transition = "opacity .8s";
+        cloud.style.opacity = "0";
+    });
+
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('result').classList.remove('hidden');
+
+    setInterval(createHeart, 300);
+}
+
+function createHeart(){
+
+    const heart = document.createElement('div');
+
+    heart.innerHTML = '❤️';
+
+    heart.style.position = 'fixed';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.bottom = '-20px';
+    heart.style.fontSize = (20 + Math.random() * 15) + 'px';
+    heart.style.pointerEvents = 'none';
+    heart.style.animation = 'floatHeart 4s linear forwards';
+    heart.style.zIndex = '999';
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 4000);
+}
+
+function escapeButton(){
+    const btn = document.getElementById('noBtn');
+
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+
+    btn.style.position = 'fixed';
+    btn.style.left = `${x}px`;
+    btn.style.top = `${y}px`;
+}
+</script>
+
+</body>
+</html>
